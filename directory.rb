@@ -1,4 +1,4 @@
-puts "The students fo Villains Academy"
+puts "The students of Villains Academy"
 puts "---------------"
 puts "Dr. Hannibal Lector"
 puts "Darth Vader"

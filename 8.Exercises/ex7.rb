@@ -20,7 +20,6 @@ def input_students
     name = gets.chomp
   end
 
-  puts students
   students
 end
 

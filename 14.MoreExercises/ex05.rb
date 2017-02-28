@@ -1,7 +1,6 @@
 @students = []
 
 
-
 def add_students(name, cohort)
   newentry = {name: name, cohort: cohort}
   if @students.include? newentry
@@ -47,15 +46,12 @@ def save_students
   puts "Enter name of destination file."
   filename = gets.chomp
   file = File.open(filename, "w")
+  confirmation = "The following students have been saved to #{filename}:\n"
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    file.puts [student[:name], student[:cohort]].join(",")
+    confirmation << student[:name] + "\n"
   end
-  puts "The following students have been saved to #{filename}:"
-  @students.each do |student|
-    puts student[:name]
-  end
+  puts confirmation
   file.close
 end
 

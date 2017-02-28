@@ -43,15 +43,12 @@ end
 
 def save_students
   file = File.open("../.gitignore/students.csv", "w")
+  confirmation = "The following students have been saved to ../.gitignore/students.csv:\n"
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    file.puts [student[:name], student[:cohort]].join(",")
+    confirmation << student[:name] + "\n"
   end
-  puts "The following students have been saved to ../.gitignore/students.csv:"
-  @students.each do |student|
-    puts student[:name]
-  end
+  puts confirmation
   file.close
 end
 

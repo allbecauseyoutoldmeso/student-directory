@@ -1,5 +1,5 @@
 @students = []
-@options = {"1" => "input_students", "2" => "show_students", "3" => "save_students", "4" => "load_students", "5" => "check_file_text", "9" => "exit"}
+
 
 
 def add_students(name, cohort)
@@ -35,27 +35,33 @@ end
 
 
 def print_menu
-  @options.each do |x,y|
-  puts "#{x}: #{y}"
-end
+  puts "1. Input the students."
+  puts "2. Show the students."
+  puts "3. Save the list to a file."
+  puts "4. Load students from file."
+  puts "9. Exit."
 end
 
 
 def save_students
-  file = File.open("../.gitignore/students.csv", "w")
+  puts "Enter name of destination file."
+  filename = gets.chomp
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  puts "The following students have been saved to ../.gitignore/students.csv:"
+  puts "The following students have been saved to #{filename}:"
   @students.each do |student|
     puts student[:name]
   end
   file.close
 end
 
-def load_students(filename = "../.gitignore/students.csv")
+def load_students
+  puts "Enter name of source file."
+  filename = gets.chomp
   puts "Adding students from #{filename}..."
   file = File.open(filename, "r")
   file.readlines.each do |line|
@@ -65,26 +71,14 @@ def load_students(filename = "../.gitignore/students.csv")
   file.close
 end
 
-def try_load_students
-  filename = ARGV.first
-  if filename.nil?
-    filename = "../.gitignore/students.csv"
-  end
-  load_students(filename)
-end
 
 def process(selection)
- if @options.include? selection
- self.send(@options[selection])
+ options = {"1" => "input_students", "2" => "show_students", "3" => "save_students", "4" => "load_students", "9" => "exit"}
+ if options.include? selection
+ self.send(options[selection])
  else
    puts "I'm sorry, I don't understand.  Please select an option."
  end
-end
-
-def check_file_text
-  puts "This is the data currently saved to ../.gitignore/students.csv:"
-  txt = open("../.gitignore/students.csv")
-  print txt.read
 end
 
 
@@ -95,5 +89,5 @@ def interactive_menu
   end
 end
 
-try_load_students
+
 interactive_menu

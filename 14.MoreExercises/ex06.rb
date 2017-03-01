@@ -41,32 +41,32 @@ end
 def save_students
   puts "Enter name of destination file."
   filename = gets.chomp
+  confirmation = "The following students have been saved to #{filename}:\n"
   if File.exists?(filename)
-    file = File.open(filename, "w")
-    confirmation = "The following students have been saved to #{filename}:\n"
-    @students.each do |student|
-      file.puts [student[:name], student[:cohort]].join(",")
-      confirmation << student[:name] + "\n"
+    File.open(filename, "w") do |file|
+      @students.each do |student|
+        file.puts [student[:name], student[:cohort]].join(",")
+        confirmation << student[:name] + "\n"
+      end
     end
     puts confirmation
-    file.close
   else
     puts "I'm sorry, there is no such file."
     save_students
   end
 end
 
+
 def load_students
   puts "Enter name of source file."
   filename = gets.chomp
   if File.exists?(filename)
-    puts "Adding students from #{filename}..."
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_students(name, cohort.to_sym)
+    File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+        name, cohort = line.chomp.split(',')
+        add_students(name, cohort.to_sym)
+      end
     end
-    file.close
   else
     puts "I'm sorry, there is no such file."
     load_students

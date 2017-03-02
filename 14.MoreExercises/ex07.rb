@@ -44,14 +44,14 @@ def save_students
   filename = gets.chomp
   confirmation = "The following students have been saved to #{filename}:\n"
   if File.exists?(filename)
-    File.open(filename, "w") do |file|
-      @students.each do |student|
-        file.puts [student[:name], student[:cohort]].join(",")
-        confirmation << student[:name] + "\n"
-      end
-    end
-    puts confirmation
-  else
+     CSV.open(filename, "wb") do |csv|
+       @students.each do |student|
+       csv << [student[:name], student[:cohort]]
+       confirmation << student[:name] + "\n"
+       end
+     end
+     puts confirmation
+   else
     puts "I'm sorry, there is no such file."
     save_students
   end

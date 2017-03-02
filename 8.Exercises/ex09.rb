@@ -29,7 +29,7 @@ def print_footer(students)
     puts "Sadly we have no students."
   else
   puts "Overall, we have #{students.count} great students."
-  end 
+  end
 end
 
 students = input_students

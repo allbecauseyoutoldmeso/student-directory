@@ -63,13 +63,11 @@ def load_students
   filename = gets.chomp
   if File.exists?(filename)
     puts "Adding students from #{filename}..."
-    file = File.open(filename, "r")
     CSV.foreach(filename) do |row|
       name = row[0]
       cohort = row[1]
       add_students(name, cohort.to_sym)
     end
-    file.close
   else
     puts "I'm sorry, there is no such file."
     load_students
